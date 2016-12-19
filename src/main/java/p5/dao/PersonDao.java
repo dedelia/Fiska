@@ -1,6 +1,6 @@
 package p5.dao;
 
-import p5.model.User;
+import p5.model.Person;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by dtristu on 14.12.2016.
  */
-public class UserDao implements IUserDao {
+public class PersonDao implements IPersonDao {
     private EntityManager entityManager;
 
 
@@ -18,8 +18,8 @@ public class UserDao implements IUserDao {
         this.entityManager = entityManager;
     }
 
-    public List<User> getAllUsers() {
-        return this.entityManager.createQuery("from User").getResultList();
+    public List<Person> getAllPeople() {
+        return this.entityManager.createQuery("from Person").getResultList();
     }
 
 

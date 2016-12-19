@@ -3,6 +3,7 @@ package p5.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by dtristu on 14.12.2016.
@@ -10,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "person")
-public class User {
+public class Person {
 
     @Id
     @GeneratedValue(generator = "idIncrementor")
@@ -20,9 +21,13 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    public User () {}
+    @JoinColumn(name = "internshipFk", referencedColumnName = "internship")
+    @ManyToMany
+    private List<Internship> internshipList;
 
-    public User(String username) {
+    public Person() {}
+
+    public Person(String username) {
         this.username = username;
     }
 
@@ -36,6 +41,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<Internship> getInternshipList() {
+        return internshipList;
+    }
+
+    public void setInternshipList(List<Internship> internshipList) {
+        this.internshipList = internshipList;
     }
 }
 

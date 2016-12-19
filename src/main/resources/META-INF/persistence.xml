@@ -9,7 +9,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>
-            p5.model.User
+            p5.model.Person
         </class>
 
     </persistence-unit>
