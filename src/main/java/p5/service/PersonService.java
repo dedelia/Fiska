@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import p5.api.PersonApi;
 import p5.model.Person;
 
-import java.util.List;
+import javax.transaction.Transactional;
+import java.util.Set;
 
 /**
  * Created by dtristu on 14.12.2016.
@@ -20,10 +21,10 @@ public class PersonService {
     private PersonApi personApi;
 
     @RequestMapping(value = "/people", method = RequestMethod.GET)
-    public List<Person> getUsers()
+    public Set<Person> getUsers()
     {
-        List<Person> listOfPeople = personApi.getPersonList();
-        return listOfPeople;
+        Set<Person> setOfPeople = personApi.getPersonSet();
+        return setOfPeople;
     }
 
     public PersonApi getPersonApi() {

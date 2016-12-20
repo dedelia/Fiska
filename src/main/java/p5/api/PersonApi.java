@@ -5,11 +5,13 @@ import p5.dao.PersonDao;
 import p5.model.Person;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dtristu on 14.12.2016.
  */
 public class PersonApi {
+
     // transactional, only calls on dao
     @Autowired
     PersonDao personDao;
@@ -20,7 +22,7 @@ public class PersonApi {
        this.personDao =personDao;
     }
 
-    public List<Person> getPersonList()
+    public Set<Person> getPersonSet()
     {
      return personDao.getAllPeople();
     }

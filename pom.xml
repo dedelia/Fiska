@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>SpringRestfulWebServicesWithJSONExample</groupId>
-    <artifactId>SpringRestfulWebServicesWithJSONExample</artifactId>
+    <groupId>Fiska</groupId>
+    <artifactId>Fiska</artifactId>
 
     <packaging>war</packaging>
 
     <version>0.0.1-SNAPSHOT</version>
-    <name>SpringRestfulWebServicesWithJSONExample Maven Webapp</name>
+    <name>Fiska Web App</name>
     <url>http://maven.apache.org</url>
 
 
@@ -16,6 +16,7 @@
         <hibernate.version>4.3.11.Final</hibernate.version>
         <jdk.version>1.7</jdk.version>
         <commons-dpc.version>1.4</commons-dpc.version>
+        <postgresql.version>9.4.1212.jre7</postgresql.version>
     </properties>
 
     <dependencies>
@@ -91,7 +92,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4.1212.jre7</version>
+            <version>${postgresql.version}</version>
         </dependency>
 
         <dependency>

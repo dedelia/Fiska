@@ -12,6 +12,18 @@
             p5.model.Person
         </class>
 
+        <class>
+            p5.model.Company
+        </class>
+
+        <class>
+            p5.model.Project
+        </class>
+
+        <class>
+            p5.model.Internship
+        </class>
+
     </persistence-unit>
 
 </persistence>

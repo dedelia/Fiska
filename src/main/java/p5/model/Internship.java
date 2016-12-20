@@ -3,7 +3,7 @@ package p5.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dtristu on 16.12.2016.
@@ -15,23 +15,34 @@ public class Internship {
     @Id
     @GeneratedValue(generator = "idIncrementor")
     @GenericGenerator(name = "idIncrementor", strategy = "increment")
+    @Column (name= "internship_id")
     private Long id;
 
     @Column(name = "type")
     private String type;
 
-    @JoinColumn(name = "companyFk", referencedColumnName = "company")
-    @ManyToOne(optional = false)
-    private Company companyFk;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="person_iternship",
+            joinColumns={@JoinColumn(name="internship_id", referencedColumnName="internship_id")},
+            inverseJoinColumns={@JoinColumn(name="person_id", referencedColumnName="person_id")})
+    private Set<Person> personSet;
 
-    @JoinColumn(name = "personFk", referencedColumnName = "person")
-    @ManyToMany
-    private List<Person> personList;
+    @ManyToMany(fetch = FetchType.LAZY) @JoinTable(name="internship_project",
+            joinColumns={@JoinColumn(name="internship_id", referencedColumnName="internship_id")},
+            inverseJoinColumns={@JoinColumn(name="project_id", referencedColumnName="project_id")})
+    private Set<Project> projectSet;
+
+    @ManyToOne
+    @JoinColumn(name="company_id", referencedColumnName="company_id")
+    private Company company;
 
     public Internship() {}
 
-    public Internship(String type) {
+    public Internship(String type,Set<Person> personSet,Set<Project> projectSet,Company company) {
         this.type = type;
+        this.personSet=personSet;
+        this.projectSet=projectSet;
+        this.company=company;
     }
 
     public Long getId() {
@@ -50,19 +61,28 @@ public class Internship {
         this.type = type;
     }
 
-    public Company getCompanyFk() {
-        return companyFk;
+    public Set<Person> getPersonSet() {
+        return personSet;
     }
 
-    public void setCompanyFk(Company companyFk) {
-        this.companyFk = companyFk;
+    public void setPersonSet(Set<Person> personSet) {
+        this.personSet = personSet;
     }
 
-    public List<Person> getPersonList() {
-        return personList;
+    public Set<Project> getProjectSet() {
+        return projectSet;
     }
 
-    public void setPersonList(List<Person> personList) {
-        this.personList = personList;
+    public void setProjectSet(Set<Project> projectSet) {
+        this.projectSet = projectSet;
     }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
 }

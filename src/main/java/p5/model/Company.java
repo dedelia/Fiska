@@ -3,7 +3,7 @@ package p5.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dtristu on 16.12.2016.
@@ -15,19 +15,22 @@ public class Company {
     @Id
     @GeneratedValue(generator = "idIncrementor")
     @GenericGenerator(name = "idIncrementor", strategy = "increment")
+    @Column(name="company_id")
     private Long id;
 
     @Column(name = "company_name")
     private String companyName;
 
-    @JoinColumn(name = "internshipFk", referencedColumnName = "internship")
-    @OneToMany
-    private List<Internship> internshipList;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "internship", joinColumns = @JoinColumn(name = "company_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "company_fk", nullable = false))
+    private Set<Internship> internshipSet;
 
     public Company() {}
 
-    public Company(String companyName) {
+    public Company(String companyName,Set<Internship> internshipSet) {
+
         this.companyName = companyName;
+        this.internshipSet=internshipSet;
     }
 
     public Long getId() {
@@ -42,11 +45,12 @@ public class Company {
         this.companyName = companyName;
     }
 
-    public List<Internship> getInternshipList() {
-        return internshipList;
+    public Set<Internship> getInternshipSet() {
+        return internshipSet;
     }
 
-    public void setInternshipList(List<Internship> internshipList) {
-        this.internshipList = internshipList;
+    public void setInternshipSet(Set<Internship> internshipSet) {
+        this.internshipSet = internshipSet;
     }
+
 }

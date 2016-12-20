@@ -3,10 +3,11 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
                            http://www.springframework.org/schema/tx
-                           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+                           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
@@ -17,22 +18,30 @@
           p:password="password512."/>
 
 
-    <bean id="entityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="testDataSource" />
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
-            </props>
+        <property name="packagesToScan" value="p5.model" />
+
+        <property name="hibernateProperties">
+            <map>
+                <entry key="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+                <entry key="hibernate.show_sql" value="false" />
+            </map>
         </property>
     </bean>
 
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="autodetectDataSource" value="false" />
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <context:annotation-config />
+    <tx:annotation-driven />
+
+    <context:component-scan base-package="p5.service" />
+    <context:component-scan base-package="p5.api" />
+    <context:component-scan base-package="p5.dao" />
 
 </beans>
