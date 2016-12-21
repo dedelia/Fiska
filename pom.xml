@@ -1,20 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>Fiska</groupId>
-    <artifactId>Fiska</artifactId>
+    <groupId>InternshipManagement</groupId>
+    <artifactId>InternshipManagement</artifactId>
 
     <packaging>war</packaging>
 
     <version>0.0.1-SNAPSHOT</version>
-    <name>Fiska Web App</name>
+    <name>InternshipManagement</name>
     <url>http://maven.apache.org</url>
 
 
     <properties>
         <spring.version>4.2.1.RELEASE</spring.version>
         <hibernate.version>4.3.11.Final</hibernate.version>
-        <jdk.version>1.7</jdk.version>
+        <jdk.version>1.8</jdk.version>
         <commons-dpc.version>1.4</commons-dpc.version>
         <postgresql.version>9.4.1212.jre7</postgresql.version>
     </properties>

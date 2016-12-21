@@ -3,24 +3,24 @@ package p5.dao;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import p5.model.Company;
+import p5.model.Project;
 
 import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by dtristu on 19.12.2016.
+ * Created by dtristu on 21.12.2016.
  */
-public class CompanyDao implements ICompayDao {
+public class ProjectDao implements IProjectDao {
+
     @Resource
     private SessionFactory sessionFactory;
 
-    public Set<Company> getAllCompanies() {
-
+    public Set<Project> getAllProjects() {
         Session session = this.sessionFactory.getCurrentSession();
         Query query = session.createQuery("from p5.model.Person");
-        Set<Company> setCompanies=new HashSet<Company>(query.list());
-        return setCompanies;
+        Set<Project> setProjects=new HashSet<Project>(query.list());
+        return setProjects;
     }
 }

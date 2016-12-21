@@ -8,7 +8,6 @@ import p5.model.Person;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,6 +24,7 @@ public class PersonDao implements IPersonDao {
 //        this.sessionFactory = sessionFactory;
 //    }
 
+    @Transactional
     public Set<Person> getAllPeople() {
         Session session = this.sessionFactory.getCurrentSession();
         Query query = session.createQuery("from p5.model.Person");
