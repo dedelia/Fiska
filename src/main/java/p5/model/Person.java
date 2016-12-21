@@ -3,6 +3,7 @@ package p5.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -22,13 +23,15 @@ public class Person {
     @Column(name = "username")
     private String username;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="person_internship",
             joinColumns={@JoinColumn(name="person_id", referencedColumnName="person_id")},
             inverseJoinColumns={@JoinColumn(name="internship_id", referencedColumnName="internship_id")})
     private Set<Internship> internshipSet;
 
-    public Person() {}
+    public Person() {
+        this.internshipSet=new HashSet<Internship>();
+    }
 
     public Person(String username) {
 

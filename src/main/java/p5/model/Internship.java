@@ -21,18 +21,19 @@ public class Internship {
     @Column(name = "type")
     private String type;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="person_iternship",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="person_internship",
             joinColumns={@JoinColumn(name="internship_id", referencedColumnName="internship_id")},
             inverseJoinColumns={@JoinColumn(name="person_id", referencedColumnName="person_id")})
     private Set<Person> personSet;
 
-    @ManyToMany(fetch = FetchType.LAZY) @JoinTable(name="internship_project",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="internship_project",
             joinColumns={@JoinColumn(name="internship_id", referencedColumnName="internship_id")},
             inverseJoinColumns={@JoinColumn(name="project_id", referencedColumnName="project_id")})
     private Set<Project> projectSet;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="company_id", referencedColumnName="company_id")
     private Company company;
 

@@ -1,4 +1,4 @@
-package p5.dao;
+package p5.dao.interfaces;
 
 import p5.model.Person;
 import java.util.Set;

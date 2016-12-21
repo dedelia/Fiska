@@ -21,7 +21,7 @@ public class Project {
     @Column(name = "project_name")
     private String projectName;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="internship_project",
             joinColumns={@JoinColumn(name="project_id", referencedColumnName="project_id")},
             inverseJoinColumns={@JoinColumn(name="internship_id", referencedColumnName="internship_id")})

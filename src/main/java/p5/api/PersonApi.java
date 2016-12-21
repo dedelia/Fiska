@@ -1,24 +1,24 @@
 package p5.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import p5.dao.PersonDao;
+import p5.api.interfaces.IPersonApi;
+import p5.dao.interfaces.IPersonDao;
 import p5.model.Person;
 
-import java.util.List;
 import java.util.Set;
 
 /**
  * Created by dtristu on 14.12.2016.
  */
-public class PersonApi {
+public class PersonApi implements IPersonApi{
 
     // transactional, only calls on dao
     @Autowired
-    PersonDao personDao;
+    IPersonDao personDao;
 
     public PersonApi(){}
 
-    public PersonApi(PersonDao personDao) {
+    public PersonApi(IPersonDao personDao) {
        this.personDao =personDao;
     }
 
@@ -27,11 +27,11 @@ public class PersonApi {
      return personDao.getAllPeople();
     }
 
-    public PersonDao getPerson() {
+    public IPersonDao getPersonDao() {
         return personDao;
     }
 
-    public void setPerson(PersonDao personDao) {
+    public void setPersonDao(IPersonDao personDao) {
         this.personDao = personDao;
     }
 }

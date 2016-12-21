@@ -3,6 +3,8 @@ package p5.dao;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import p5.dao.interfaces.IPersonDao;
 import p5.model.Person;
 
 import javax.annotation.Resource;
@@ -15,14 +17,9 @@ import java.util.Set;
  */
 public class PersonDao implements IPersonDao {
 
+    @Autowired
     @Resource
     private SessionFactory sessionFactory;
-
-
-//    @PersistenceContext
-//    public void setEntityManager(EntityManager sessionFactory) {
-//        this.sessionFactory = sessionFactory;
-//    }
 
     @Transactional
     public Set<Person> getAllPeople() {

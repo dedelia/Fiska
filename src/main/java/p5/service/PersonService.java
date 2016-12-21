@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import p5.api.PersonApi;
+import p5.api.interfaces.IPersonApi;
 import p5.model.Person;
 
-import javax.transaction.Transactional;
 import java.util.Set;
 
 /**
@@ -18,20 +18,20 @@ public class PersonService {
     //call only api (url request)
 
     @Autowired
-    private PersonApi personApi;
+    private IPersonApi personApi;
 
     @RequestMapping(value = "/people", method = RequestMethod.GET)
-    public Set<Person> getUsers()
+    public Set<Person> getPeople()
     {
         Set<Person> setOfPeople = personApi.getPersonSet();
         return setOfPeople;
     }
 
-    public PersonApi getPersonApi() {
+    public IPersonApi getPersonApi() {
         return personApi;
     }
 
-    public void setPersonApi(PersonApi personApi) {
+    public void setPersonApi(IPersonApi personApi) {
         this.personApi = personApi;
     }
 }

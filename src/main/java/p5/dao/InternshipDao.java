@@ -3,9 +3,11 @@ package p5.dao;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import p5.dao.interfaces.IInternshipDao;
 import p5.model.Internship;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,9 +18,10 @@ public class InternshipDao implements IInternshipDao {
     @Resource
     private SessionFactory sessionFactory;
 
+    @Transactional
     public Set<Internship> getAllInternships() {
         Session session = this.sessionFactory.getCurrentSession();
-        Query query = session.createQuery("from p5.model.Person");
+        Query query = session.createQuery("from p5.model.Internship");
         Set<Internship> setInternships=new HashSet<Internship>(query.list());
         return setInternships;
     }

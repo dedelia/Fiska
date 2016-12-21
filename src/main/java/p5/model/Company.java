@@ -21,8 +21,9 @@ public class Company {
     @Column(name = "company_name")
     private String companyName;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "internship", joinColumns = @JoinColumn(name = "company_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "company_fk", nullable = false))
+    @Transient
     private Set<Internship> internshipSet;
 
     public Company() {}
