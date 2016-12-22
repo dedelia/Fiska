@@ -11,7 +11,11 @@ import java.util.Set;
 public interface IProjectApi {
 
     public Set<Project> getProjectSet();
-    public IProjectDao getProjectDao();
-    public void setProjectDao(IProjectDao projectDao);
+
+    public void addProject(Project project);
+
+    public void updateProject(Project project);
+
+    public void deleteProject(Long projectId);
 
 }

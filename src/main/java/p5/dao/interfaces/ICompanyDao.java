@@ -9,8 +9,13 @@ import java.util.Set;
  */
 public interface ICompanyDao {
 
-    public Set<Company> getAllCompanies();/*
-        public void addCompany(Company company);
-        public void deleteCompany(Long companyId , Long companyId);
-        public Person getCompany(Long companyId,Long companyId);*/
+    public Set<Company> getAllCompanies();
+
+    public void addCompany(Company company);
+
+    public void updateCompany(Company company);
+
+    public void deleteCompany(Long companyId);
+
+    public Company getCompany(Long companyId);
 }

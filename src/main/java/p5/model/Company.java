@@ -15,7 +15,7 @@ public class Company {
     @Id
     @GeneratedValue(generator = "idIncrementor")
     @GenericGenerator(name = "idIncrementor", strategy = "increment")
-    @Column(name="company_id")
+    @Column(name = "company_id")
     private Long id;
 
     @Column(name = "company_name")
@@ -26,16 +26,21 @@ public class Company {
     @Transient
     private Set<Internship> internshipSet;
 
-    public Company() {}
+    public Company() {
+    }
 
-    public Company(String companyName,Set<Internship> internshipSet) {
+    public Company(String companyName, Set<Internship> internshipSet) {
 
         this.companyName = companyName;
-        this.internshipSet=internshipSet;
+        this.internshipSet = internshipSet;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCompanyName() {

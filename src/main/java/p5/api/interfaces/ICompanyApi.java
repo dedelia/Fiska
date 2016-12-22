@@ -11,7 +11,11 @@ import java.util.Set;
 public interface ICompanyApi {
 
     public Set<Company> getCompanySet();
-    public ICompanyDao getCompanyDao();
-    public void setCompanyDao(ICompanyDao companyDao);
+
+    public void addCompany(Company company);
+
+    public void updateCompany(Company company);
+
+    public void deleteCompany(Long companyId);
 
 }

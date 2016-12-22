@@ -15,35 +15,36 @@ public class Internship {
     @Id
     @GeneratedValue(generator = "idIncrementor")
     @GenericGenerator(name = "idIncrementor", strategy = "increment")
-    @Column (name= "internship_id")
+    @Column(name = "internship_id")
     private Long id;
 
     @Column(name = "type")
     private String type;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="person_internship",
-            joinColumns={@JoinColumn(name="internship_id", referencedColumnName="internship_id")},
-            inverseJoinColumns={@JoinColumn(name="person_id", referencedColumnName="person_id")})
+    @JoinTable(name = "person_internship",
+            joinColumns = {@JoinColumn(name = "internship_id", referencedColumnName = "internship_id")},
+            inverseJoinColumns = {@JoinColumn(name = "person_id", referencedColumnName = "person_id")})
     private Set<Person> personSet;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="internship_project",
-            joinColumns={@JoinColumn(name="internship_id", referencedColumnName="internship_id")},
-            inverseJoinColumns={@JoinColumn(name="project_id", referencedColumnName="project_id")})
+    @JoinTable(name = "internship_project",
+            joinColumns = {@JoinColumn(name = "internship_id", referencedColumnName = "internship_id")},
+            inverseJoinColumns = {@JoinColumn(name = "project_id", referencedColumnName = "project_id")})
     private Set<Project> projectSet;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="company_id", referencedColumnName="company_id")
+    @JoinColumn(name = "company_id", referencedColumnName = "company_id")
     private Company company;
 
-    public Internship() {}
+    public Internship() {
+    }
 
-    public Internship(String type,Set<Person> personSet,Set<Project> projectSet,Company company) {
+    public Internship(String type, Set<Person> personSet, Set<Project> projectSet, Company company) {
         this.type = type;
-        this.personSet=personSet;
-        this.projectSet=projectSet;
-        this.company=company;
+        this.personSet = personSet;
+        this.projectSet = projectSet;
+        this.company = company;
     }
 
     public Long getId() {

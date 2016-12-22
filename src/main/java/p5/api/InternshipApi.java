@@ -15,21 +15,27 @@ public class InternshipApi implements IInternshipApi {
     @Autowired
     IInternshipDao internshipDao;
 
-    public InternshipApi() {}
+    public InternshipApi() {
+    }
 
     public InternshipApi(IInternshipDao internshipDao) {
-        this.internshipDao=internshipDao;
+        this.internshipDao = internshipDao;
     }
 
     public Set<Internship> getInternshipSet() {
         return internshipDao.getAllInternships();
     }
 
-    public IInternshipDao getInternshipDao() {
-        return internshipDao;
+    public void addInternship(Internship internship) {
+        this.internshipDao.addInternship(internship);
     }
 
-    public void setInternshipDao(IInternshipDao internshipDao) {
-        this.internshipDao=internshipDao;
+    public void updateInternship(Internship internship) {
+        this.internshipDao.updateInternship(internship);
     }
+
+    public void deleteInternship(Long internshipId) {
+        this.internshipDao.deleteInternship(internshipId);
+    }
+
 }

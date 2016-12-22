@@ -10,26 +10,33 @@ import java.util.Set;
 /**
  * Created by dtristu on 21.12.2016.
  */
-public class CompanyApi implements ICompanyApi{
+public class CompanyApi implements ICompanyApi {
 
     @Autowired
     ICompanyDao compayDao;
 
-    public CompanyApi() {}
+    public CompanyApi() {
+    }
 
     public CompanyApi(ICompanyDao compayDao) {
-        this.compayDao=compayDao;
+        this.compayDao = compayDao;
     }
 
     public Set<Company> getCompanySet() {
         return compayDao.getAllCompanies();
     }
 
-    public ICompanyDao getCompanyDao() {
-        return compayDao;
+    public void addCompany(Company company) {
+        this.compayDao.addCompany(company);
     }
 
-    public void setCompanyDao(ICompanyDao companyDao) {
-    this.compayDao=companyDao;
+    public void updateCompany(Company company) {
+        this.compayDao.updateCompany(company);
+
     }
+
+    public void deleteCompany(Long companyId) {
+        this.compayDao.deleteCompany(companyId);
+    }
+
 }

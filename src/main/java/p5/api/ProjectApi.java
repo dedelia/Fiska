@@ -15,23 +15,28 @@ public class ProjectApi implements IProjectApi {
     @Autowired
     IProjectDao projectDao;
 
-    public ProjectApi() {}
+    public ProjectApi() {
+    }
 
     public ProjectApi(IProjectDao projectDao) {
         this.projectDao = projectDao;
     }
 
-    public IProjectDao getProjectDao() {
-        return projectDao;
-    }
-
-    public void setProjectDao(IProjectDao projectDao) {
-
-        this.projectDao = projectDao;
-    }
-
     public Set<Project> getProjectSet() {
         return projectDao.getAllProjects();
+    }
+
+    public void addProject(Project project) {
+        this.projectDao.addProject(project);
+    }
+
+    public void updateProject(Project project) {
+        this.projectDao.updateProject(project);
+
+    }
+
+    public void deleteProject(Long projectId) {
+        this.projectDao.deleteProject(projectId);
     }
 
 }

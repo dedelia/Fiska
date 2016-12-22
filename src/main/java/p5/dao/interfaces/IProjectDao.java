@@ -11,4 +11,12 @@ public interface IProjectDao {
 
     public Set<Project> getAllProjects();
 
+    public void addProject(Project project);
+
+    public void updateProject(Project project);
+
+    public void deleteProject(Long projectId);
+
+    public Project getProject(Long projectId);
+
 }

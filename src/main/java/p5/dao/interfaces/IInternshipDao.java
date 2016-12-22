@@ -10,4 +10,12 @@ import java.util.Set;
 public interface IInternshipDao {
 
     public Set<Internship> getAllInternships();
+
+    public void addInternship(Internship internship);
+
+    public void updateInternship(Internship company);
+
+    public void deleteInternship(Long companyId);
+
+    public Internship getInternship(Long companyId);
 }

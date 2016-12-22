@@ -11,6 +11,10 @@ import java.util.Set;
 public interface IPersonApi {
 
     public Set<Person> getPersonSet();
-    public IPersonDao getPersonDao();
-    public void setPersonDao(IPersonDao personDao);
+
+    public void addPerson(Person person);
+
+    public void updatePerson(Person person);
+
+    public void deletePerson(Long personId);
 }

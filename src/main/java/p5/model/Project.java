@@ -15,29 +15,34 @@ public class Project {
     @Id
     @GeneratedValue(generator = "idIncrementor")
     @GenericGenerator(name = "idIncrementor", strategy = "increment")
-    @Column(name="project_id")
+    @Column(name = "project_id")
     private Long id;
 
     @Column(name = "project_name")
     private String projectName;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="internship_project",
-            joinColumns={@JoinColumn(name="project_id", referencedColumnName="project_id")},
-            inverseJoinColumns={@JoinColumn(name="internship_id", referencedColumnName="internship_id")})
+    @JoinTable(name = "internship_project",
+            joinColumns = {@JoinColumn(name = "project_id", referencedColumnName = "project_id")},
+            inverseJoinColumns = {@JoinColumn(name = "internship_id", referencedColumnName = "internship_id")})
     private Set<Internship> internshipSet;
 
-    public Project(){}
+    public Project() {
+    }
 
     public Project(String projectName, Set<Internship> internshipSet) {
 
         this.projectName = projectName;
-        this.internshipSet=internshipSet;
+        this.internshipSet = internshipSet;
 
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getProjectName() {

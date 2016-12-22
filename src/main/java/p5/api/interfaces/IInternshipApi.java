@@ -11,7 +11,11 @@ import java.util.Set;
 public interface IInternshipApi {
 
     public Set<Internship> getInternshipSet();
-    public IInternshipDao getInternshipDao();
-    public void setInternshipDao(IInternshipDao internshipDao);
+
+    public void addInternship(Internship internship);
+
+    public void updateInternship(Internship internship);
+
+    public void deleteInternship(Long internshipId);
 
 }

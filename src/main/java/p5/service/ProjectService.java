@@ -1,9 +1,7 @@
 package p5.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import p5.api.interfaces.IProjectApi;
 import p5.model.Project;
 
@@ -20,17 +18,36 @@ public class ProjectService {
     private IProjectApi projectApi;
 
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
-    public Set<Project> getProjects()
-    {
+    public Set<Project> getProjects() {
         Set<Project> setOfProjects = projectApi.getProjectSet();
         return setOfProjects;
     }
 
-    public IProjectApi getProjectApi() {
-        return projectApi;
+    @RequestMapping(value = "/projects/{project_name}", method = RequestMethod.POST)
+    @ResponseBody
+    public void addProject(@PathVariable("project_name") String project_name) {
+        //used path variables -> TODO replace with webParams and clean up urls
+
+        Project project = new Project();
+        project.setProjectName(project_name);
+        projectApi.addProject(project);
     }
 
-    public void setProjectApi(IProjectApi projectApi) {
-        this.projectApi = projectApi;
+    @RequestMapping(value = "/projects/{id}/{project_name}", method = RequestMethod.PUT)
+    @ResponseBody
+    public void updateProject(@PathVariable("id") Long id,
+                              @PathVariable("project_name") String project_name) {
+        // finds project by id and updates the username
+        Project project = new Project();
+        project.setId(id);
+        project.setProjectName(project_name);
+        projectApi.updateProject(project);
+
+    }
+
+    @RequestMapping(value = "/projects/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteProject(@PathVariable("id") Long id) {
+        projectApi.deleteProject(id);
     }
 }

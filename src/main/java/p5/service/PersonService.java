@@ -1,10 +1,7 @@
 package p5.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import p5.api.PersonApi;
+import org.springframework.web.bind.annotation.*;
 import p5.api.interfaces.IPersonApi;
 import p5.model.Person;
 
@@ -21,17 +18,38 @@ public class PersonService {
     private IPersonApi personApi;
 
     @RequestMapping(value = "/people", method = RequestMethod.GET)
-    public Set<Person> getPeople()
-    {
+    public Set<Person> getPeople() {
         Set<Person> setOfPeople = personApi.getPersonSet();
         return setOfPeople;
     }
 
-    public IPersonApi getPersonApi() {
-        return personApi;
+    @RequestMapping(value = "/people/{username}", method = RequestMethod.POST)
+    @ResponseBody
+    public void addPerson(@PathVariable("username") String username) {
+        //used path variables -> TODO replace with webParams and clean up urls
+
+        Person person = new Person();
+        person.setUsername(username);
+        personApi.addPerson(person);
     }
 
-    public void setPersonApi(IPersonApi personApi) {
-        this.personApi = personApi;
+    @RequestMapping(value = "/people/{id}/{username}", method = RequestMethod.PUT)
+    @ResponseBody
+    public void updatePerson(@PathVariable("id") Long id,
+                             @PathVariable("username") String username) {
+        // finds person by id and updates the username
+        Person person = new Person();
+        person.setId(id);
+        person.setUsername(username);
+        personApi.updatePerson(person);
+
     }
+
+    @RequestMapping(value = "/people/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deletePerson(@PathVariable("id") Long id) {
+        personApi.deletePerson(id);
+    }
+
+
 }

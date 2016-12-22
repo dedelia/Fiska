@@ -1,9 +1,7 @@
 package p5.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import p5.api.interfaces.IInternshipApi;
 import p5.model.Internship;
 
@@ -19,17 +17,37 @@ public class InternshipService {
     private IInternshipApi internshipApi;
 
     @RequestMapping(value = "/internships", method = RequestMethod.GET)
-    public Set<Internship> getInternships()
-    {
+    public Set<Internship> getInternships() {
         Set<Internship> setOfPeople = internshipApi.getInternshipSet();
         return setOfPeople;
     }
 
-    public IInternshipApi getInternshipApi() {
-        return internshipApi;
+    @RequestMapping(value = "/internships/{type}", method = RequestMethod.POST)
+    @ResponseBody
+    public void addInternship(@PathVariable("type") String type) {
+        //used path variables -> TODO replace with webParams and clean up urls
+
+        Internship internship = new Internship();
+        internship.setType(type);
+        internshipApi.addInternship(internship);
     }
 
-    public void setInternshipApi(IInternshipApi internshipApi) {
-        this.internshipApi = internshipApi;
+    @RequestMapping(value = "/internships/{id}/{type}", method = RequestMethod.PUT)
+    @ResponseBody
+    public void updateInternship(@PathVariable("id") Long id,
+                                 @PathVariable("type") String type) {
+        // finds internship by id and updates the username
+        Internship internship = new Internship();
+        internship.setId(id);
+        internship.setType(type);
+        internshipApi.updateInternship(internship);
+
     }
+
+    @RequestMapping(value = "/internships/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteInternship(@PathVariable("id") Long id) {
+        internshipApi.deleteInternship(id);
+    }
+
 }

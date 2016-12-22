@@ -9,10 +9,14 @@ import java.util.Set;
     public interface IPersonDao {
 
         public Set<Person> getAllPeople();
-//        public void addPerson(Person personId);
-//        public void updatePerson(Person person);
-//        public void deletePerson(Long personId);
-//        public Person getPerson(Long personId);
+
+    public void addPerson(Person personId);
+
+    public void updatePerson(Person person);
+
+    public void deletePerson(Long personId);
+
+    public Person getPerson(Long personId);
 
     }
 

@@ -10,6 +10,7 @@ import p5.model.Project;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,7 +26,48 @@ public class ProjectDao implements IProjectDao {
     public Set<Project> getAllProjects() {
         Session session = this.sessionFactory.getCurrentSession();
         Query query = session.createQuery("from p5.model.Project");
-        Set<Project> setProjects=new HashSet<Project>(query.list());
+        Set<Project> setProjects = new HashSet<Project>(query.list());
         return setProjects;
+    }
+
+    @Transactional
+    public void addProject(Project project) {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.persist(project);
+    }
+
+    @Transactional
+    public void updateProject(Project project) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Project itemFromDbs = this.getProject(project.getId());
+        if (itemFromDbs != null) {
+            itemFromDbs.setProjectName(project.getProjectName());
+            itemFromDbs.setInternshipSet(project.getInternshipSet());
+            session.persist(itemFromDbs);
+        }
+    }
+
+    @Transactional
+    public void deleteProject(Long projectId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Project itemFromDbs = this.getProject(projectId);
+        if (itemFromDbs != null) {
+            session.delete(itemFromDbs);
+        }
+    }
+
+    @Transactional
+    public Project getProject(Long projectId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        if (projectId != null) {
+            Query query = session.createQuery("from p5.model.Project p WHERE p.id = :projectId ");
+            query.setParameter("projectId", projectId);
+            List<Project> result = query.list();
+            if (!result.isEmpty()) {
+                return result.get(0);
+            }
+
+        }
+        return null;
     }
 }
