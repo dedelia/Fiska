@@ -23,31 +23,23 @@ public class PersonService {
         return setOfPeople;
     }
 
-    @RequestMapping(value = "/people/{username}", method = RequestMethod.POST)
+    @RequestMapping(value = "/people", method = RequestMethod.POST)
     @ResponseBody
-    public void addPerson(@PathVariable("username") String username) {
-        //used path variables -> TODO replace with webParams and clean up urls
-
-        Person person = new Person();
-        person.setUsername(username);
+    public void addPerson(@RequestBody Person person) {
         personApi.addPerson(person);
     }
 
-    @RequestMapping(value = "/people/{id}/{username}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/people", method = RequestMethod.PUT)
     @ResponseBody
-    public void updatePerson(@PathVariable("id") Long id,
-                             @PathVariable("username") String username) {
-        // finds person by id and updates the username
-        Person person = new Person();
-        person.setId(id);
-        person.setUsername(username);
+    public void updatePerson(@RequestBody Person person) {
+        // finds person by id and updates the username, if there's no id in the obj-> should not update
         personApi.updatePerson(person);
 
     }
 
     @RequestMapping(value = "/people/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public void deletePerson(@PathVariable("id") Long id) {
+    public void deletePerson(@PathVariable Long id ) {
         personApi.deletePerson(id);
     }
 

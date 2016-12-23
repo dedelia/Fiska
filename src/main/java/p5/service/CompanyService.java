@@ -22,24 +22,16 @@ public class CompanyService {
         return setOfCompanies;
     }
 
-    @RequestMapping(value = "/companies/{company_name}", method = RequestMethod.POST)
+    @RequestMapping(value = "/companies", method = RequestMethod.POST)
     @ResponseBody
-    public void addCompany(@PathVariable("company_name") String company_name) {
-        //used path variables -> TODO replace with webParams and clean up urls
-
-        Company company = new Company();
-        company.setCompanyName(company_name);
+    public void addCompany(@RequestBody Company company) {
         companyApi.addCompany(company);
     }
 
-    @RequestMapping(value = "/companies/{id}/{company_name}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/companies", method = RequestMethod.PUT)
     @ResponseBody
-    public void updateCompany(@PathVariable("id") Long id,
-                              @PathVariable("company_name") String company_name) {
-        // finds company by id and updates the username
-        Company company = new Company();
-        company.setId(id);
-        company.setCompanyName(company_name);
+    public void updateCompany(@RequestBody Company company) {
+        // finds company by id and updates the username, if there's no id in the obj-> should not update
         companyApi.updateCompany(company);
 
     }

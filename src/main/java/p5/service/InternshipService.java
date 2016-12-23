@@ -22,24 +22,16 @@ public class InternshipService {
         return setOfPeople;
     }
 
-    @RequestMapping(value = "/internships/{type}", method = RequestMethod.POST)
+    @RequestMapping(value = "/internships", method = RequestMethod.POST)
     @ResponseBody
-    public void addInternship(@PathVariable("type") String type) {
-        //used path variables -> TODO replace with webParams and clean up urls
-
-        Internship internship = new Internship();
-        internship.setType(type);
+    public void addInternship(@RequestBody Internship internship) {
         internshipApi.addInternship(internship);
     }
 
-    @RequestMapping(value = "/internships/{id}/{type}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/internships", method = RequestMethod.PUT)
     @ResponseBody
-    public void updateInternship(@PathVariable("id") Long id,
-                                 @PathVariable("type") String type) {
-        // finds internship by id and updates the username
-        Internship internship = new Internship();
-        internship.setId(id);
-        internship.setType(type);
+    public void updateInternship(@RequestBody Internship internship) {
+        // finds internship by id and updates the username, if there's no id in the obj-> should not update
         internshipApi.updateInternship(internship);
 
     }

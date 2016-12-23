@@ -23,24 +23,16 @@ public class ProjectService {
         return setOfProjects;
     }
 
-    @RequestMapping(value = "/projects/{project_name}", method = RequestMethod.POST)
+    @RequestMapping(value = "/projects", method = RequestMethod.POST)
     @ResponseBody
-    public void addProject(@PathVariable("project_name") String project_name) {
-        //used path variables -> TODO replace with webParams and clean up urls
-
-        Project project = new Project();
-        project.setProjectName(project_name);
+    public void addProject(@RequestBody Project project) {
         projectApi.addProject(project);
     }
 
-    @RequestMapping(value = "/projects/{id}/{project_name}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/projects", method = RequestMethod.PUT)
     @ResponseBody
-    public void updateProject(@PathVariable("id") Long id,
-                              @PathVariable("project_name") String project_name) {
-        // finds project by id and updates the username
-        Project project = new Project();
-        project.setId(id);
-        project.setProjectName(project_name);
+    public void updateProject(@RequestBody Project project) {
+        // finds project by id and updates the username, if there's no id in the obj-> should not update
         projectApi.updateProject(project);
 
     }
