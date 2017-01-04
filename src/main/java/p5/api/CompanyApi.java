@@ -3,6 +3,7 @@ package p5.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import p5.api.interfaces.ICompanyApi;
 import p5.dao.interfaces.ICompanyDao;
+import p5.exceptions.DataMissingException;
 import p5.model.Company;
 
 import java.util.Set;
@@ -35,8 +36,14 @@ public class CompanyApi implements ICompanyApi {
 
     }
 
-    public void deleteCompany(Long companyId) {
+    public void deleteCompany(Long companyId) throws DataMissingException {
+
         this.compayDao.deleteCompany(companyId);
+
+    }
+
+    public Company getCompanyById(Long companyId) {
+        return this.compayDao.findById(companyId);
     }
 
 }

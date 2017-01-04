@@ -4,12 +4,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import p5.dao.interfaces.ICompanyDao;
+import p5.exceptions.DataMissingException;
 import p5.model.Company;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -37,36 +39,45 @@ public class CompanyDao implements ICompanyDao {
     @Transactional
     public void updateCompany(Company company) {
         Session session = this.sessionFactory.getCurrentSession();
-        Company itemFromDbs = this.getCompany(company.getId());
-        if (itemFromDbs != null) {
+        Company itemFromDbs = this.findById(company.getId());
+        if(itemFromDbs.getId()!=null)
+        {
             itemFromDbs.setCompanyName(company.getCompanyName());
             itemFromDbs.setInternshipSet(company.getInternshipSet());
             session.persist(itemFromDbs);
         }
+
     }
 
     @Transactional
     public void deleteCompany(Long companyId) {
         Session session = this.sessionFactory.getCurrentSession();
-        Company itemFromDbs = this.getCompany(companyId);
-        if (itemFromDbs != null) {
-            session.delete(itemFromDbs);
-        }
+        Company itemFromDbs = this.findById(companyId);
+        session.delete(itemFromDbs);
     }
 
     @Transactional
-    public Company getCompany(Long companyId) {
+    public Optional<Company> findByIdIfExists(Long companyId) {
         Session session = this.sessionFactory.getCurrentSession();
         if (companyId != null) {
             Query query = session.createQuery("from p5.model.Company c WHERE c.id = :companyId ");
             query.setParameter("companyId", companyId);
             List<Company> result = query.list();
             if (!result.isEmpty()) {
-                return result.get(0);
+                return Optional.ofNullable(result.get(0));
             }
 
         }
-        return null;
+        return Optional.empty();
     }
 
+
+    @Transactional
+    public Company findById(Long companyId){
+        Optional<Company> company = findByIdIfExists(companyId);
+        if (!company.isPresent())
+            throw new DataMissingException("400", "Object not found");
+
+        return company.get();
+    }
 }

@@ -5,12 +5,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import p5.dao.interfaces.IProjectDao;
+import p5.exceptions.DataMissingException;
 import p5.model.Project;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -39,35 +41,45 @@ public class ProjectDao implements IProjectDao {
     @Transactional
     public void updateProject(Project project) {
         Session session = this.sessionFactory.getCurrentSession();
-        Project itemFromDbs = this.getProject(project.getId());
-        if (itemFromDbs != null) {
+        Project itemFromDbs = this.findById(project.getId());
+        if(itemFromDbs.getId()!=null) {
             itemFromDbs.setProjectName(project.getProjectName());
             itemFromDbs.setInternshipSet(project.getInternshipSet());
             session.persist(itemFromDbs);
         }
+
     }
 
     @Transactional
     public void deleteProject(Long projectId) {
         Session session = this.sessionFactory.getCurrentSession();
-        Project itemFromDbs = this.getProject(projectId);
+        Project itemFromDbs = this.findById(projectId);
         if (itemFromDbs != null) {
             session.delete(itemFromDbs);
         }
     }
 
     @Transactional
-    public Project getProject(Long projectId) {
+    public Optional<Project> findByIdIfExists(Long projectId) {
         Session session = this.sessionFactory.getCurrentSession();
         if (projectId != null) {
-            Query query = session.createQuery("from p5.model.Project p WHERE p.id = :projectId ");
+            Query query = session.createQuery("from p5.model.Project c WHERE c.id = :projectId ");
             query.setParameter("projectId", projectId);
             List<Project> result = query.list();
             if (!result.isEmpty()) {
-                return result.get(0);
+                return Optional.ofNullable(result.get(0));
             }
 
         }
-        return null;
+        return Optional.empty();
+    }
+
+    @Transactional
+    public Project findById(Long projectId) {
+        Optional<Project> project = findByIdIfExists(projectId);
+        if (!project.isPresent())
+            throw new DataMissingException("400", "Object not found");
+
+        return project.get();
     }
 }

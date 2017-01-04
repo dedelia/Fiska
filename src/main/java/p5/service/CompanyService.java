@@ -3,8 +3,8 @@ package p5.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import p5.api.interfaces.ICompanyApi;
+import p5.exceptions.DataMissingException;
 import p5.model.Company;
-
 import java.util.Set;
 
 /**
@@ -38,7 +38,8 @@ public class CompanyService {
 
     @RequestMapping(value = "/companies/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public void deleteCompany(@PathVariable("id") Long id) {
-        companyApi.deleteCompany(id);
+    public void deleteCompany(@PathVariable("id") Long id) throws DataMissingException {
+            companyApi.deleteCompany(id);
     }
+
 }

@@ -1,6 +1,5 @@
 package p5.api.interfaces;
 
-import p5.dao.interfaces.IInternshipDao;
 import p5.model.Internship;
 
 import java.util.Set;

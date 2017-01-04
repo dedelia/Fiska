@@ -4,12 +4,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import p5.dao.interfaces.IInternshipDao;
+import p5.exceptions.DataMissingException;
 import p5.model.Internship;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -37,8 +39,8 @@ public class InternshipDao implements IInternshipDao {
     @Transactional
     public void updateInternship(Internship internship) {
         Session session = this.sessionFactory.getCurrentSession();
-        Internship itemFromDbs = this.getInternship(internship.getId());
-        if (itemFromDbs != null) {
+        Internship itemFromDbs = this.findById(internship.getId());
+        if (itemFromDbs.getId() != null) {
             itemFromDbs.setType(internship.getType());
             itemFromDbs.setPersonSet(internship.getPersonSet());
             itemFromDbs.setProjectSet(internship.getProjectSet());
@@ -50,24 +52,33 @@ public class InternshipDao implements IInternshipDao {
     @Transactional
     public void deleteInternship(Long internshipId) {
         Session session = this.sessionFactory.getCurrentSession();
-        Internship itemFromDbs = this.getInternship(internshipId);
+        Internship itemFromDbs = this.findById(internshipId);
         if (itemFromDbs != null) {
             session.delete(itemFromDbs);
         }
     }
 
     @Transactional
-    public Internship getInternship(Long internshipId) {
+    public Optional<Internship> findByIdIfExists(Long internshipId) {
         Session session = this.sessionFactory.getCurrentSession();
         if (internshipId != null) {
             Query query = session.createQuery("from p5.model.Internship i WHERE i.id = :internshipId ");
             query.setParameter("internshipId", internshipId);
             List<Internship> result = query.list();
             if (!result.isEmpty()) {
-                return result.get(0);
+                return Optional.ofNullable(result.get(0));
             }
 
         }
-        return null;
+        return Optional.empty();
+    }
+
+    @Transactional
+    public Internship findById(Long internshipId) {
+        Optional<Internship> internship = findByIdIfExists(internshipId);
+        if (!internship.isPresent())
+            throw new DataMissingException("400", "Object not found");
+
+        return internship.get();
     }
 }

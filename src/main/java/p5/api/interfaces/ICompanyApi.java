@@ -1,6 +1,6 @@
 package p5.api.interfaces;
 
-import p5.dao.interfaces.ICompanyDao;
+import p5.exceptions.DataMissingException;
 import p5.model.Company;
 
 import java.util.Set;
@@ -16,6 +16,8 @@ public interface ICompanyApi {
 
     public void updateCompany(Company company);
 
-    public void deleteCompany(Long companyId);
+    public void deleteCompany(Long companyId) throws DataMissingException;
+
+    public Company getCompanyById(Long companyId);
 
 }
