@@ -1,5 +1,6 @@
 package p5.dao.interfaces;
 
+import p5.model.Internship;
 import p5.model.Person;
 
 import java.util.Set;
@@ -33,6 +34,21 @@ public interface IPersonDao {
      * @return
      */
     Person findById(Long personId);
+
+    /**
+     *
+     * @param personId
+     * @return
+     */
+    Set<Internship> getIntershipSetForPerson(Long personId);
+
+    /**
+     *
+     * @param personId
+     * @param internshipType
+     * @return
+     */
+    Set<Internship>getInternhipsForPersonByType(Long personId,String internshipType);
 
 }
 

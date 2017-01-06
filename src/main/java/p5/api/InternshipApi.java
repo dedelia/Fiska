@@ -38,4 +38,9 @@ public class InternshipApi implements IInternshipApi {
         this.internshipDao.deleteInternship(internshipId);
     }
 
+    public Set<Internship> getInternshipsOfType(String type) {
+        return this.internshipDao.getIntershipsOfType(type);
+    }
+
+
 }

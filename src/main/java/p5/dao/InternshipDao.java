@@ -81,4 +81,15 @@ public class InternshipDao implements IInternshipDao {
 
         return internship.get();
     }
+
+    @Transactional
+    public Set<Internship> getIntershipsOfType(String type){
+        Session session = this.sessionFactory.getCurrentSession();
+
+            Query query = session.createQuery("from p5.model.Internship i WHERE i.type like :type");
+            query.setParameter("type", type);
+            Set<Internship> setInternships = new HashSet<Internship>(query.list());
+
+        return setInternships;
+    }
 }

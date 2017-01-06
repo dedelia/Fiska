@@ -77,7 +77,6 @@ public class CompanyDao implements ICompanyDao {
         Optional<Company> company = findByIdIfExists(companyId);
         if (!company.isPresent())
             throw new DataMissingException("400", "Object not found");
-
         return company.get();
     }
 }

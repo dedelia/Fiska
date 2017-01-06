@@ -3,6 +3,7 @@ package p5.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import p5.api.interfaces.IPersonApi;
+import p5.model.Internship;
 import p5.model.Person;
 
 import java.util.Set;
@@ -39,8 +40,22 @@ public class PersonService {
 
     @RequestMapping(value = "/people/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public void deletePerson(@PathVariable Long id ) {
+    public void deletePerson(@PathVariable Long id) {
         personApi.deletePerson(id);
+    }
+
+
+    @RequestMapping(value = "/people/{id}/internships", method = RequestMethod.GET)
+    @ResponseBody
+    public Set<Internship> getInternhipsForPerson(@PathVariable Long id) {
+        return personApi.getInternshipSetForPerson(id);
+    }
+
+    @RequestMapping(value = "/personInternshipsType", method = RequestMethod.GET)
+    @ResponseBody
+    public Set<Internship> getInternhipsForPersonByType(@RequestParam(value = "personId", required = true) Long personId,
+                                                        @RequestParam(value = "internshipType", required = true) String internshipType) {
+        return personApi.getInternhipsForPersonByType(personId,internshipType);
     }
 
 }

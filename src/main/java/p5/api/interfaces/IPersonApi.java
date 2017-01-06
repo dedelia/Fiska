@@ -1,6 +1,7 @@
 package p5.api.interfaces;
 
 import p5.dao.interfaces.IPersonDao;
+import p5.model.Internship;
 import p5.model.Person;
 
 import java.util.Set;
@@ -10,11 +11,15 @@ import java.util.Set;
  */
 public interface IPersonApi {
 
-    public Set<Person> getPersonSet();
+    Set<Person> getPersonSet();
 
-    public void addPerson(Person person);
+    void addPerson(Person person);
 
-    public void updatePerson(Person person);
+    void updatePerson(Person person);
 
-    public void deletePerson(Long personId);
+    void deletePerson(Long personId);
+
+    Set<Internship> getInternshipSetForPerson(Long personId);
+
+     Set<Internship> getInternhipsForPersonByType(Long personId,String internshipType);
 }

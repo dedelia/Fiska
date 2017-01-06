@@ -6,14 +6,12 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import p5.dao.interfaces.IPersonDao;
 import p5.exceptions.DataMissingException;
+import p5.model.Internship;
 import p5.model.Person;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by dtristu on 14.12.2016.
@@ -82,4 +80,29 @@ public class PersonDao implements IPersonDao {
         return person.get();
     }
 
+    @Transactional
+    public Set<Internship> getIntershipSetForPerson(Long personId) {
+        Set<Internship> internshipSet = new HashSet<Internship>();
+        if (personId != null) {
+            Person person = findById(personId);
+            internshipSet = person.getInternshipSet();
+
+        }
+        return internshipSet;
+    }
+
+    @Transactional
+    public Set<Internship> getInternhipsForPersonByType(Long personId,String internshipType) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Set<Internship> internshipSet=new HashSet<>();
+        if (personId != null && internshipType.length()>0) {
+            Query query = session.createQuery("from p5.model.Person p join p.internshipSet i" +
+                    " where p.id=:personId and i.type =:internshipType");
+            query.setParameter("personId", personId);
+            query.setParameter("internshipType", internshipType);
+
+            internshipSet = new HashSet<Internship>(query.list());
+        }
+        return internshipSet;
+    }
 }

@@ -3,6 +3,7 @@ package p5.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import p5.api.interfaces.IPersonApi;
 import p5.dao.interfaces.IPersonDao;
+import p5.model.Internship;
 import p5.model.Person;
 
 import java.util.Set;
@@ -37,8 +38,19 @@ public class PersonApi implements IPersonApi {
 
     }
 
+    @Override
+    public Set<Internship> getInternshipSetForPerson(Long personId) {
+        return this.personDao.getIntershipSetForPerson(personId);
+    }
+
     public void updatePerson(Person person) {
         this.personDao.updatePerson(person);
     }
+
+    public Set<Internship> getInternhipsForPersonByType(Long personId,String internshipType)
+    {return this.personDao.getInternhipsForPersonByType(personId,internshipType);}
+
+
+
 
 }

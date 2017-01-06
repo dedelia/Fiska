@@ -9,12 +9,13 @@ import java.util.Set;
  */
 public interface IInternshipApi {
 
-    public Set<Internship> getInternshipSet();
+    Set<Internship> getInternshipSet();
 
-    public void addInternship(Internship internship);
+    void addInternship(Internship internship);
 
-    public void updateInternship(Internship internship);
+    void updateInternship(Internship internship);
 
-    public void deleteInternship(Long internshipId);
+    void deleteInternship(Long internshipId);
 
+    Set<Internship> getInternshipsOfType(String type);
 }

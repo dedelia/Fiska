@@ -34,4 +34,11 @@ public interface IInternshipDao {
      * @return
      */
     Internship findById(Long internshipId);
+
+    /**
+     *
+     * @param type
+     * @return
+     */
+    Set<Internship> getIntershipsOfType(String type);
 }

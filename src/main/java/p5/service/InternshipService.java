@@ -17,9 +17,10 @@ public class InternshipService {
     private IInternshipApi internshipApi;
 
     @RequestMapping(value = "/internships", method = RequestMethod.GET)
-    public Set<Internship> getInternships() {
-        Set<Internship> setOfPeople = internshipApi.getInternshipSet();
-        return setOfPeople;
+    @ResponseBody
+    public Set<Internship> getInternshipsOfType(@RequestParam(value = "type", required = false) String type) {
+
+        return internshipApi.getInternshipsOfType(type);
     }
 
     @RequestMapping(value = "/internships", method = RequestMethod.POST)
@@ -41,5 +42,8 @@ public class InternshipService {
     public void deleteInternship(@PathVariable("id") Long id) {
         internshipApi.deleteInternship(id);
     }
+
+
+
 
 }
